@@ -59,7 +59,7 @@ const CouponModal = ({ coupon, onClose, onSuccess }) => {
         valid_from: formatDatetime(coupon.valid_from),
         valid_to: formatDatetime(coupon.valid_to),
         usage_limit: coupon.usage_limit || "",
-        user_usage_limit: coupon.user_usage_limit,
+        user_usage_limit: coupon.user_usage_limit || "",
         app_restriction: coupon.app_restriction,
         is_active: coupon.is_active,
       });
@@ -86,7 +86,7 @@ const CouponModal = ({ coupon, onClose, onSuccess }) => {
       min_order_amount: parseFloat(formData.min_order_amount),
       max_discount_amount: formData.max_discount_amount ? parseFloat(formData.max_discount_amount) : null,
       usage_limit: formData.usage_limit ? parseInt(formData.usage_limit) : null,
-      user_usage_limit: parseInt(formData.user_usage_limit),
+      user_usage_limit: formData.user_usage_limit ? parseInt(formData.user_usage_limit) : null,
       valid_from: formData.valid_from ? new Date(formData.valid_from).toISOString() : null,
       valid_to: formData.valid_to ? new Date(formData.valid_to).toISOString() : null,
     };
