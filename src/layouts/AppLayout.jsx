@@ -39,7 +39,7 @@ const AppLayout = () => {
             <Layers className="text-white" size={24} />
           </div>
           <div>
-            <h1 className="font-bold text-lg text-white leading-tight tracking-tight uppercase">
+            <h1 className="font-bold text-lg text-white leading-tight tracking-tight uppercase whitespace-nowrap">
               Central Coupon
             </h1>
             <p className="text-xs text-primary-400 font-semibold tracking-widest uppercase opacity-75">
