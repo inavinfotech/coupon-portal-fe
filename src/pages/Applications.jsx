@@ -24,7 +24,7 @@ const Applications = () => {
 
   const fetchApps = async () => {
     try {
-      const response = await api.get("/apps");
+      const response = await api.get("/apps/");
       setApps(response.data);
     } catch (err) {
       console.error("Failed to fetch applications", err);
@@ -47,7 +47,7 @@ const Applications = () => {
 
     setCreating(true);
     try {
-      const response = await api.post("/apps", { name: newAppName });
+      const response = await api.post("/apps/", { name: newAppName });
       setNewAppName("");
       setShowCreateModal(false);
       setRevealModal(response.data); // Store credentials with plain secret for one-time reveal

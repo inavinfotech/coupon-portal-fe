@@ -24,7 +24,7 @@ const Coupons = () => {
 
   const fetchCoupons = async () => {
     try {
-      const response = await api.get("/coupons");
+      const response = await api.get("/coupons/");
       setCoupons(response.data);
     } catch (err) {
       console.error("Failed to fetch coupons", err);
