@@ -21,6 +21,25 @@ const Coupons = () => {
   // Modal states
   const [showModal, setShowModal] = useState(false);
   const [selectedCoupon, setSelectedCoupon] = useState(null);
+  
+  const [apps, setApps] = useState([]);
+
+  const fetchApps = async () => {
+    try {
+      const res = await api.get("/apps/");
+      setApps(res.data);
+    } catch (err) {
+      console.error("Failed to fetch apps for filter dropdown", err);
+    }
+  };
+
+  const getAppRestrictionLabel = (restriction) => {
+    if (!restriction || restriction.toLowerCase() === "global") {
+      return "Global";
+    }
+    const app = apps.find(a => a.id === restriction);
+    return app ? app.name : restriction;
+  };
 
   const fetchCoupons = async () => {
     try {
@@ -35,6 +54,7 @@ const Coupons = () => {
 
   useEffect(() => {
     fetchCoupons();
+    fetchApps();
   }, []);
 
   const handleToggleActive = async (couponId, currentStatus) => {
@@ -129,8 +149,11 @@ const Coupons = () => {
           >
             <option value="all">All Scopes</option>
             <option value="global">Global Only</option>
-            <option value="store">Store Only</option>
-            <option value="lms">LMS Only</option>
+            {apps.map((app) => (
+              <option key={app.id} value={app.id}>
+                {app.name}
+              </option>
+            ))}
           </select>
         </div>
       </div>
@@ -183,7 +206,7 @@ const Coupons = () => {
                     </td>
                     <td className="py-4 px-4">
                       <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase border bg-gray-50 text-gray-600 border-gray-200">
-                        {coupon.app_restriction}
+                        {getAppRestrictionLabel(coupon.app_restriction)}
                       </span>
                     </td>
                     <td className="py-4 px-4 font-semibold text-gray-800">
