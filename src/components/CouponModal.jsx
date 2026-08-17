@@ -22,6 +22,20 @@ const CouponModal = ({ coupon, onClose, onSuccess }) => {
     is_active: true,
   });
 
+  const [apps, setApps] = useState([]);
+
+  useEffect(() => {
+    const fetchApps = async () => {
+      try {
+        const res = await api.get("/apps/");
+        setApps(res.data);
+      } catch (err) {
+        console.error("Failed to fetch applications for coupon restrictions dropdown", err);
+      }
+    };
+    fetchApps();
+  }, []);
+
   useEffect(() => {
     if (coupon) {
       // Format datetime strings for input values (YYYY-MM-DDThh:mm)
@@ -133,8 +147,11 @@ const CouponModal = ({ coupon, onClose, onSuccess }) => {
                 className="w-full bg-white border border-gray-200 rounded-xl py-2.5 px-4 text-gray-900 focus:outline-none focus:border-primary-500 text-sm font-medium"
               >
                 <option value="global">Global (All Apps)</option>
-                <option value="store">Store Only</option>
-                <option value="lms">LMS Only</option>
+                {apps.map((app) => (
+                  <option key={app.id} value={app.id}>
+                    {app.name}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
